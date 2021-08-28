@@ -1,53 +1,53 @@
-const task = require("./config/function.js");
-const inquirer = require("inquirer");
+const task = require('./config/function.js');
+const inquirer = require('inquirer');
 
 function mainMenu() {
     inquirer.prompt({
-        type: "list",
-        message: "Choose a task: ",
+        type: 'list',
+        message: 'Use arrow keys to select task ',
         choices: [
-            "-View all employees",
-            "-View list of departments",
-            "-View all employee roles",
-            "-Add employee",
-            "-Add department",
-            "-Add role",
-            "-Update an employee's role",
-            "-Update an employee's manager",
-            "-Delete an employee",
-            "- ***Exit***"
+            '>View Employees',
+            '>View Deparments',
+            '>View Employees',
+            '>Add Employee',
+            '>Add Department',
+            '>Add Role',
+            '>Update Role',
+            '>Update Manager',
+            '>Delete Employee',
+            '>EXIT'
         ],
-        name: "choice"
+        name: 'choice'
     }).then(function ({ choice }) {
-        if (choice === "-View all employees") {
+        if (choice === '>View Employees') {
             task.viewEmployees()
                 .then(function () {
-                    console.log("\n");
+                    console.log('\n');
                     mainMenu();
                 });
-        } else if (choice === "-View list of departments") {
+        } else if (choice === '>View Departments') {
             task.viewDepartments()
                 .then(function () {
-                    console.log("\n");
+                    console.log('\n');
                     mainMenu();
                 });
-        } else if (choice === "-View all employee roles") {
+        } else if (choice === '>View Roles') {
             task.viewRoles()
                 .then(function () {
-                    console.log("\n");
+                    console.log('\n');
                     mainMenu();
                 });
-        } else if (choice === "-Add employee") {
+        } else if (choice === '>Add Employee') {
             addEmployeePrompt();
-        } else if (choice === "-Add department") {
+        } else if (choice === '>Add Department') {
             addDepartmentPrompt();
-        } else if (choice === "-Add role") {
+        } else if (choice === '>Add Role') {
             addRolePrompt();
-        } else if (choice === "-Update an employee's role") {
+        } else if (choice === '>Update Role') {
             updateRolePrompt();
-        } else if (choice === "-Update an employee's manager") {
+        } else if (choice === '>Update Manager') {
             updateManagerPrompt();
-        } else if (choice === "-Delete an employee") {
+        } else if (choice === '>Delete Employee') {
             deleteEmployeePrompt();
         } else {
             task.endConnection();
@@ -62,7 +62,7 @@ function addEmployeePrompt() {
             for (let i = 0; i < res.length; i++) {
                 managerArray.push(res[i].name);
             }
-            managerArray.push("none");
+            managerArray.push('none');
             task.getRoles()
                 .then(function (response) {
                     const roleTitleArray = [];
@@ -70,39 +70,39 @@ function addEmployeePrompt() {
                         roleTitleArray.push(response[i].title);
                     }
                     inquirer.prompt([{
-                        type: "input",
-                        message: "Enter employee's first name: ",
-                        name: "firstName"
+                        type: 'input',
+                        message: 'Enter First Name: ',
+                        name: 'firstName'
                     },
                     {
-                        type: "input",
-                        message: "Enter employee's last name: ",
-                        name: "lastName"
+                        type: 'input',
+                        message: 'Enter Last Name: ',
+                        name: 'lastName'
                     },
                     {
-                        type: "list",
-                        message: "Select employee's role: ",
+                        type: 'list',
+                        message: 'Select role: ',
                         choices: roleTitleArray,
-                        name: "role"
+                        name: 'role'
                     },
                     {
-                        type: "list",
-                        message: "Select employee's manager: ",
+                        type: 'list',
+                        message: 'Select Manager: ',
                         choices: managerArray,
-                        name: "manager"
+                        name: 'manager'
                     }]).then(function ({ firstName, lastName, role, manager }) {
                         const roleId = response[roleTitleArray.indexOf(role)].id;
-                        if (manager === "none") {
+                        if (manager === 'none') {
                             task.addEmployee(firstName, lastName, roleId)
                                 .then(function () {
-                                    console.log("\n");
+                                    console.log('\n');
                                     mainMenu();
                                 });
                         } else {
                             const managerId = res[managerArray.indexOf(manager)].id;
                             task.addEmployee(firstName, lastName, roleId, managerId)
                                 .then(function () {
-                                    console.log("\n");
+                                    console.log('\n');
                                     mainMenu();
                                 });
                         }
@@ -119,17 +119,17 @@ function addDepartmentPrompt() {
                 deptArray.push(response[i].name);
             }
             inquirer.prompt({
-                type: "input",
-                message: "Enter the name of new department you'd like to add: ",
-                name: "deptName"
+                type: 'input',
+                message: 'Department Name: ',
+                name: 'deptName'
             }).then(function ({ deptName }) {
                 if (deptArray.includes(deptName)) {
-                    console.log("There is already a department with that name!\n");
+                    console.log('Department Already Exists\n');
                     mainMenu();
                 } else {
                     task.addDepartment(deptName)
                         .then(function () {
-                            console.log("\n");
+                            console.log('\n');
                             mainMenu();
                         });
                 }
@@ -151,29 +151,29 @@ function addRolePrompt() {
                         deptNames.push(deptArray[i].name);
                     }
                     inquirer.prompt([{
-                        type: "input",
-                        message: "Enter the name of the role you would like to add: ",
-                        name: "title"
+                        type: 'input',
+                        message: 'Enter Role: ',
+                        name: 'title'
                     },
                     {
-                        type: "input",
-                        message: "Enter the annual salary of the new role: ",
-                        name: "salary"
+                        type: 'input',
+                        message: 'Enter Salary: ',
+                        name: 'salary'
                     },
                     {
-                        type: "list",
-                        message: "Select the department in which the new role will work: ",
+                        type: 'list',
+                        message: 'Select Department: ',
                         choices: deptNames,
-                        name: "department"
+                        name: 'department'
                     }]).then(function ({ title, salary, department }) {
                         const deptId = deptArray[deptNames.indexOf(department)].id;
                         if (roleArray.includes(title)) {
-                            console.log("Error - that title already exists!\n");
+                            console.log('Title Already Exists\n');
                             mainMenu();
                         } else {
                             task.addRole(title, salary, deptId)
                                 .then(function () {
-                                    console.log("\n");
+                                    console.log('\n');
                                     mainMenu();
                                 });
                         }
@@ -196,16 +196,16 @@ function updateRolePrompt() {
                         roleArray.push(response[i].title);
                     }
                     inquirer.prompt([{
-                        type: "list",
-                        message: "Choose the employee whose role you'd like to update: ",
+                        type: 'list',
+                        message: 'Choose Employee: ',
                         choices: emptArr,
-                        name: "employee"
+                        name: 'employee'
                     },
                     {
-                        type: "list",
-                        message: "Select the employee's new role: ",
+                        type: 'list',
+                        message: 'Select Role: ',
                         choices: roleArray,
-                        name: "role"
+                        name: 'role'
                     }]).then(function ({ employee, role }) {
                         const emptId = res[emptArr.indexOf(employee)].id;
                         task.updateRole(emptId, role)
@@ -226,26 +226,26 @@ function updateManagerPrompt() {
                 emptArr.push(employees[i].name);
             }
             inquirer.prompt([{
-                type: "list",
-                message: "Select the employee whose manager you would like to update: ",
+                type: 'list',
+                message: 'Select Manager: ',
                 choices: emptArr,
-                name: "employee"
+                name: 'employee'
             },
             {
-                type: "list",
-                message: "Select the employee's new manager: ",
+                type: 'list',
+                message: 'Select Manger: ',
                 choices: emptArr,
-                name: "manager"
+                name: 'manager'
             }]).then(function ({ employee, manager }) {
                 if (employee === manager) {
-                    console.log("Error - you cannot assign an employee to manage him/herself!");
+                    console.log('Invalid');
                     mainMenu();
                 } else {
                     const emptId = employees[emptArr.indexOf(employee)].id;
                     const mgrId = employees[emptArr.indexOf(manager)].id;
                     task.updateManager(emptId, mgrId)
                         .then(function () {
-                            console.log("\n");
+                            console.log('\n');
                             mainMenu();
                         });
                 }
@@ -261,15 +261,15 @@ function deleteEmployeePrompt() {
                 empArray.push(employees[i].name);
             }
             inquirer.prompt({
-                type: "list",
-                message: "Which employee would you like to delete?",
+                type: 'list',
+                message: 'Select Employee ',
                 choices: empArray,
-                name: "employee"
+                name: 'employee'
             }).then(function ({ employee }) {
                 const empId = employees[empArray.indexOf(employee)].id;
-                task.deleteRecord("employees", empId)
+                task.deleteRecord('employees', empId)
                     .then(function () {
-                        console.log("\n");
+                        console.log('\n');
                         mainMenu();
                     });
             });

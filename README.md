@@ -4,7 +4,7 @@
 
 ![Screenshot](https://github.com/uglyb0nes/tcob/blob/master/images/Employee%20Tracker.png)
 
-### [Employee Tracker](https://drive.google.com/file/d/1mNxncrqpA6RP85lRAFVnbHXJ5iadmqqg/view)
+### [Employee Management System](https://drive.google.com/file/d/1mNxncrqpA6RP85lRAFVnbHXJ5iadmqqg/view)
 
 ## Table of Contents:
 

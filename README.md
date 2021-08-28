@@ -1,8 +1,8 @@
 # tcob (Taking Care Of Business)
 
-[![License](https://img.shields.io/badge/License-Unlicense%20-blue.svg)](https://github.com/uglyb0nes/tcob/blob/master/images/EMS.png)
+[![License](https://img.shields.io/badge/License-Unlicense%20-blue.svg)](https://opensource.org/licenses/Unlicense)
 
-![Screenshot](https://github.com/uglyb0nes/tcob/blob/master/images/Employee%20Tracker.png)
+![Screenshot](https://github.com/uglyb0nes/tcob/blob/master/images/EMS.png)
 
 ### [Employee Management System](https://drive.google.com/file/d/1mNxncrqpA6RP85lRAFVnbHXJ5iadmqqg/view)
 
